@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Story 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Pacifico', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1s ease;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 192, 203, 0.6);
+    }
+
+    .card {
+      background: white;
+      padding: 35px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      z-index: 2;
+      max-width: 320px;
+    }
+
+    h1 {
+      color: #ff4d6d;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 10px;
+      font-family: 'Pacifico', cursive;
+    }
+
+    .yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .no {
+      background: #ddd;
+      position: absolute;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 22px;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body onclick="playMusic()">
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3c1e6e3e44.mp3?filename=romantic-piano-112199.mp3">
+</audio>
+
+<div class="overlay"></div>
+
+<div class="card" id="card"></div>
+
+<script>
+  const steps = [
+    {
+      text: "Hey Jatin 🌸<br>Will you be my friend?",
+      bg: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+    },
+    {
+      text: "Okay… now tell me 💕<br>Will you be my BEST FRIEND?",
+      bg: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
+    },
+    {
+      text: "You know what this means 😳<br>Will you be my Valentine?",
+      bg: "https://images.unsplash.com/photo-1517841905240-472988babdf9"
+    },
+    {
+      text: "Important question 🐶🥹<br>Will you save me from dogs? (even the cute ones)",
+      bg: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d"
+    },
+    {
+      text: "Okay serious now 💍<br>Will you marry me someday?",
+      bg: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e"
+    },
+    {
+      text: "Last one, promise ♾️<br>Will you be my partner for life?",
+      bg: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e"
+    }
+  ];
+
+  let step = 0;
+
+  function render() {
+    document.body.style.backgroundImage = `url(${steps[step].bg})`;
+    document.getElementById("card").innerHTML = `
+      <h1>${steps[step].text}</h1>
+      <button class="yes" onclick="next()">YES 💖</button>
+      <button class="no" onmouseover="moveNo()">NO 🙈</button>
+      <p style="font-size:13px">(Tap once for music 🎶)</p>
+    `;
+  }
+
+  function next() {
+    step++;
+    if (step < steps.length) {
+      render();
+    } else {
+      document.getElementById("card").innerHTML = `
+        <h1>YAYYY 🥹💖</h1>
+        <p>This is our forever story ✨</p>
+        <p>I choose you. Always. ♾️</p>
+      `;
+    }
+  }
+
+  function moveNo() {
+    const no = document.querySelector(".no");
+    no.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    no.style.top = Math.random() * (window.innerHeight - 50) + "px";
+  }
+
+  function playMusic() {
+    document.getElementById("music").play();
+    document.body.onclick = null;
+  }
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 500);
+
+  render();
+</script>
+
+</body>
+</html>
